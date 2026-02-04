@@ -9,6 +9,7 @@ Doctor Appointment Booking backend using NestJS and TypeScript
 [Doctor Appointment Booking ER Diagram](docs/er-diagram.png)
 
 
+
 # Doctor Appointment Booking API
 
 ## Tech Stack
