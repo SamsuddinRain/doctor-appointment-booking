@@ -1,25 +1,24 @@
-import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy as JwtStrategyBase, ExtractJwt } from 'passport-jwt';
-import { Request } from 'express';
-
-function cookieExtractor(req: Request) {
-  let token = null;
-  if (req && req.cookies) token = req.cookies['jid'];
-  return token;
-}
+import { Injectable } from '@nestjs/common';
+import { Strategy, Profile } from 'passport-google-oauth20';
+import { AuthService } from '../auth.service';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(JwtStrategyBase) {
-  constructor() {
+export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
+  constructor(private authService: AuthService) {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-      ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET ?? 'change_this_secret',
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: 'http://localhost:3000/auth/google/callback',
+      scope: ['email', 'profile'],
     });
   }
 
-  async validate(payload: any) {
-    return { id: payload.sub, email: payload.email, role: payload.role };
+  async validate(
+    accessToken: string,
+    refreshToken: string,
+    profile: Profile,
+  ) {
+    return this.authService.validateGoogleUser(profile);
   }
 }
