@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Injectable,
   NotFoundException,
@@ -91,3 +92,9 @@ export class PatientService {
     return await this.patientRepo.save(patient);
   }
 }
+=======
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class PatientService {}
+>>>>>>> b4fd880e5ed4e4cd4c828c631d096722ea3734bb

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Injectable,
   NotFoundException,
@@ -143,3 +144,9 @@ export class AppointmentService {
     return !existing;
   }
 }
+=======
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class AppointmentService {}
+>>>>>>> b4fd880e5ed4e4cd4c828c631d096722ea3734bb
