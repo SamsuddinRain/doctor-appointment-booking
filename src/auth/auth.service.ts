@@ -20,6 +20,10 @@ export class AuthService {
     return this.usersRepo.findOne({ where: { email } });
   }
 
+  async findById(id: string) {
+    return this.usersRepo.findOne({ where: { id } });
+  }
+
   async findOrCreateFromGoogle(profile: any, role?: string) {
     const googleId = profile.id;
     const email = profile.emails?.[0]?.value;
@@ -58,7 +62,10 @@ export class AuthService {
       user.photo = photo;
       updated = true;
     }
-    if (role && user.role !== (role === 'doctor' ? UserRole.DOCTOR : UserRole.PATIENT)) {
+    if (
+      role &&
+      user.role !== (role === 'doctor' ? UserRole.DOCTOR : UserRole.PATIENT)
+    ) {
       user.role = role === 'doctor' ? UserRole.DOCTOR : UserRole.PATIENT;
       updated = true;
     }
@@ -66,9 +73,21 @@ export class AuthService {
     return user;
   }
 
+  validateGoogleUser(profile: any) {
+    return this.findOrCreateFromGoogle(profile);
+  }
+
   login(user: User) {
     const payload = { sub: user.id, email: user.email, role: user.role };
     const accessToken = this.jwtService.sign(payload);
-    return { accessToken };
+    return {
+      accessToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
+    };
   }
 }
