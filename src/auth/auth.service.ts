@@ -12,6 +12,34 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  /**
+   * Create a local (email-based) user.
+   * This is used by the signup endpoint so that users created via
+   * email signup can also sign in without going through Google OAuth.
+   */
+  async createLocalUser(params: {
+    email: string;
+    name?: string;
+    role: 'doctor' | 'patient';
+  }): Promise<User> {
+    const { email, name, role } = params;
+
+    const existing = await this.findByEmail(email);
+    if (existing) {
+      return existing;
+    }
+
+    const user = this.usersRepo.create({
+      email,
+      name,
+      role: role === 'doctor' ? UserRole.DOCTOR : UserRole.PATIENT,
+    });
+
+    await this.usersRepo.save(user);
+    this.logger.log(`Created new local user ${email} (${user.id})`);
+    return user;
+  }
+
   async findByGoogleId(googleId: string) {
     return this.usersRepo.findOne({ where: { googleId } });
   }

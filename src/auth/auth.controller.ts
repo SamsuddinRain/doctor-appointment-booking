@@ -27,8 +27,13 @@ export class AuthController {
       };
     }
 
-    // For now, return a simple signup response
-    // In production, implement proper validation and user creation
+    // Create a local user so that email-based signin works
+    await this.authService.createLocalUser({
+      email: signUpDto.email,
+      name: signUpDto.name,
+      role: signUpDto.role,
+    });
+
     return {
       statusCode: 201,
       message: 'Sign up successful. Please complete authentication via Google.',

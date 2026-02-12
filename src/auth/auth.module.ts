@@ -8,13 +8,14 @@ import { AuthController } from './auth.controller';
 import { GoogleStrategy } from './google.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { User } from './user.entity';
+import { JWT_SECRET } from './auth.constants';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'your-secret-key',
+      secret: JWT_SECRET,
       signOptions: { expiresIn: '1d' },
     }),
   ],

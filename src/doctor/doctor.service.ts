@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {
   Injectable,
   NotFoundException,
@@ -125,9 +124,3 @@ export class DoctorService {
       .getMany();
   }
 }
-=======
-import { Injectable } from '@nestjs/common';
-
-@Injectable()
-export class DoctorService {}
->>>>>>> b4fd880e5ed4e4cd4c828c631d096722ea3734bb
