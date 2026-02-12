@@ -9,9 +9,10 @@ import { User } from './auth/user.entity';
 import { Doctor } from './doctor/doctor.entity';
 import { Patient } from './patient/patient.entity';
 import { Appointment } from './appointment/appointment.entity';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
-<<<<<<< HEAD
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
@@ -29,18 +30,7 @@ import { Appointment } from './appointment/appointment.entity';
     PatientModule,
     AppointmentModule,
   ],
-=======
-  imports: [AuthModule],
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { DoctorModule } from './doctor/doctor.module';
-import { PatientModule } from './patient/patient.module';
-import { AppointmentModule } from './appointment/appointment.module';
-
-@Module({
-  imports: [DoctorModule, PatientModule, AppointmentModule],
   controllers: [AppController],
   providers: [AppService],
->>>>>>> b4fd880e5ed4e4cd4c828c631d096722ea3734bb
 })
 export class AppModule {}
